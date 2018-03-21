@@ -1,0 +1,258 @@
+<html>
+	<head>
+	<style>
+		canvas {
+			border: solid black 2px;
+			margin-top: 100px;
+		}
+					body{
+				background-color: #95DEE3
+			}
+			h1{
+				text-align: center;
+				text-emphasis-color: Blure;
+				border: solid black 1px;
+			}
+			h4{
+				text-align: center;
+				text-emphasis-color: blue;
+			}
+		input{
+			border: blue 2px;
+			width: 150px;
+			height: 35px;
+		}
+			canvas{
+				background-color: white;
+				align-content: center;
+				margin-top: 200px;
+				margin-left: 300px;
+				
+			}
+			      h2
+        {
+            text-decoration-color: white;
+            text-emphasis-color: white;
+            color: white;
+            text-align:justify;
+            text-decoration-color: #5A7247;
+            text-decoration-line:underline;
+            
+        }
+        ul
+        {
+    list-style-type:none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color:black;
+        }
+        li
+        {
+            float: left;
+        }
+  li a, .dropbtn {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 12px 14px;
+    text-decoration:inherit;
+}
+        li a:hover ,drpdown:hover .drpbtn
+        {
+            background-color: #5A7247;
+        }
+        li.dropdown {
+    display: inline-block;
+}
+        .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #5A7247;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {background-color: #5A7247}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+			button{
+           
+    border: none;
+    color: #5A7247;
+    padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    margin: 5px 3px;
+    cursor: pointer;
+        }
+		</style>
+	</head>
+<body>
+	<ul>
+            <li class='active'><a href="Main_window.html">HOME</a></li>
+        <li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">ASSIGNMENT</a>
+    <div class="dropdown-content">
+      <a href="Fractal.html" >Fractals</a>
+		
+		
+        <a class='active'>Driver Wheel Design </a>
+      
+    </div>
+    </li>
+    </ul>
+	<h1> DriverWheel </h1>
+	Radius:    <input type="number" id="radius" min="0" max="40" placeholder ="Please input the radius" value=60> 
+	<br>
+	<br>
+	DriverScore:  <input type="number" id="driverscore" min="4" max="100" placeholder="min=4 and Max=100" > 
+	<br>
+	<br>
+	<button id="generate" onclick="draw()"> Generate </button>
+	<button id="clear" > Erase </button>
+	<br>
+	
+	<canvas id='canvasID' width='600' height='400' ></canvas>
+	<script>
+		var canvas = document.getElementById('canvasID');
+				var ctx = canvas.getContext('2d');
+			document.getElementById('clear').addEventListener('click',function() {
+		ctx.clearRect(0,0,canvas.width,canvas.height);  
+		x1.value=''; y1.value=''; l.value=''; w.value='';
+		}, false);
+			function draw() {
+		
+			
+	var radius = document.getElementById('radius').value;
+	var driverscore = document.getElementById('driverscore').value;		
+				
+			if(driverscore == 100){
+				
+				var i=radius*0.3;
+				var j=radius*0.7;
+				var k=radius*0.05;
+				ctx.beginPath();
+				 ctx.arc(175, 75, radius, 0, Math.PI * 2, true); // Outer circle
+    ctx.moveTo(175+i,75);
+    ctx.arc(175, 75, i, 0, Math.PI * 2 , false); 
+				
+    ctx.moveTo(175+j, 75);
+    ctx.arc(175, 75, j, 0, Math.PI * 2, true);  // Left eye
+    ctx.moveTo(210, 65);
+    ctx.arc(205, 65, k, 0, Math.PI * 2, true); 
+				ctx.moveTo(165, 105);
+    ctx.arc(160, 100, k, 0, Math.PI * 2, true); 
+				ctx.moveTo(165, 50);
+    ctx.arc(162, 45, k, 0, Math.PI * 2, true);
+				//ctx.moveTo(140, 65);
+    //ctx.arc(135, 65, 5, 0, Math.PI * 2, true);// Right eye
+  ctx.stroke();
+		}else if((driverscore < 100) && (driverscore > 79)){
+			    var l=(100-driverscore)/100;
+				ctx.beginPath();
+				ctx.ellipse(200, 200, radius*l, radius, 45 * Math.PI/180, 0, 2 * Math.PI);
+			ctx.moveTo(205,200);
+			ctx.ellipse(200, 200, (radius*l)/2, radius/2, 45 * Math.PI/180, 0, 2 * Math.PI);
+			
+			  
+				ctx.stroke();
+			} else{
+		
+				
+var cw=canvas.width;
+var ch=canvas.height;
+
+var x=150;
+var y=150;
+var sides=driverscore;
+var startAngle=0;
+var anticlockwise=false;
+				var radius1=radius/2;
+				var radius2=radius/4;
+    polygon(ctx,x,y,radius,sides,startAngle,anticlockwise);
+			
+				ctx.stroke();
+	polygon1(ctx,x,y,radius1,sides,startAngle,anticlockwise);
+    ctx.stroke();
+    polygon2(ctx,x,y,radius2,sides,startAngle,anticlockwise);
+    ctx.stroke();
+				
+
+
+
+function polygon(ctx, x, y, radius, sides, startAngle, anticlockwise)     {
+     if (sides < 3) return;
+     var a = (Math.PI * 2)/sides;
+     a = anticlockwise?-a:a;
+     ctx.save();
+     ctx.translate(x,y);
+     ctx.rotate(startAngle);
+     ctx.beginPath();
+     ctx.moveTo(radius,0);
+     for (var i = 1; i < sides; i++) {
+        ctx.lineTo(radius*Math.cos(a*i),radius*Math.sin(a*i));
+     }
+     ctx.closePath();
+     ctx.restore();
+	ctx.fillStyle="DodgerBlue";
+				ctx.fill();
+}
+function polygon1(ctx, x, y, radius1, sides, startAngle, anticlockwise)  {
+     if (sides < 3) return;
+     var a = (Math.PI * 2)/sides;
+     a = anticlockwise?-a:a;
+     ctx.save();
+     ctx.translate(x,y);
+     ctx.rotate(startAngle);
+     ctx.beginPath();
+     ctx.moveTo(radius1,0);
+     for (var i = 1; i < sides; i++) {
+        ctx.lineTo(radius1*Math.cos(a*i),radius1*Math.sin(a*i));
+     }
+     ctx.closePath();
+     ctx.restore();
+	ctx.fillStyle="Orange";
+				ctx.fill();
+	
+}
+function polygon2(ctx, x, y, radius2, sides, startAngle, anticlockwise)  {
+     if (sides < 3) return;
+     var a = (Math.PI * 2)/sides;
+     a = anticlockwise?-a:a;
+     ctx.save();
+     ctx.translate(x,y);
+     ctx.rotate(startAngle);
+     ctx.beginPath();
+     ctx.moveTo(radius2,0);
+     for (var i = 1; i < sides; i++) {
+        ctx.lineTo(radius2*Math.cos(a*i),radius2*Math.sin(a*i));
+     }
+     ctx.closePath();
+     ctx.restore();
+	ctx.fillStyle="#800000";
+				ctx.fill();
+}
+				
+			}
+	  
+				
+		
+		}
+	</script>
+	</body>
+</html>
+</html>
